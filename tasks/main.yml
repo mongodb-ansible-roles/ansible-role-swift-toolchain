@@ -1,1 +1,40 @@
 ---
+- name: Remove old toolchain
+  become: true
+  file:
+    path: "{{ swift_toolchain_final_dest }}"
+    state: absent
+  when:
+    - toolchain_archive_contents.changed
+
+- name: Remove toolchain symlink
+  become: true
+  file:
+    path: "/opt/swift-{{ swift_toolchain_revision }}-{{ ansible_distribution|lower }}{{ ansible_distribution_version }}"
+    state: absent
+  when:
+    - toolchain_archive_contents.changed
+
+- name: Ensure toolchain directory exists
+  become: true
+  file:
+    path: "{{ swift_toolchain_final_dest }}"
+    state: directory
+
+- name: Move swift directory from tmp to {{ swift_toolchain_final_dest }}
+  become: true
+  command: "mv /tmp/{{ toolchain_top_level_directory }} {{ swift_toolchain_final_dest }}/usr"
+  when:
+    - toolchain_archive_contents.changed
+
+- name: Create version file [{{ swifttoolchain_revision }}]
+  become: true
+  copy:
+    content: "{{ swift_toolchain_revision }}"
+    dest: "{{ swift_toolchain_final_dest }}/toolchain_version"
+
+- name: Link swift to homedir
+  file:
+    src: "{{ swift_toolchain_final_dest }}"
+    dest: "/opt/swift-{{ swift_toolchain_revision }}-{{ ansible_distribution|lower }}{{ ansible_distribution_version }}"
+    state: link

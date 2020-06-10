@@ -1,1 +1,7 @@
 ---
+swift_toolchain_final_dest: /opt/swift
+swift_toolchain_revision: ""
+swift_toolchain_url: https://s3.amazonaws.com/boxes.10gen.com/build/swift/swift-{{ swift_toolchain_revision }}-{{ distro }}.tar.gz
+swift_toolchain_revisions_directory: /opt/swift/revisions
+swift_toolchain_delete_old_final_dest: false
+swift_toolchain_evergreen_user: root

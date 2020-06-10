@@ -1,4 +1,11 @@
 ---
+dependencies:
+  - role: ansible-role-toolchain
+    vars:
+      toolchain_url: "{{ swift_toolchain_url }}"
+      toolchain_version: "{{ swift_toolchain_revision }}"
+      toolchain_final_dest: "{{ swift_toolchain_final_dest }}"
+      toolchain_delete_old_final_dest: "{{ swift_toolchain_delete_old_final_dest }}"
 galaxy_info:
   author: MongoDB
   role_name: swift-toolchain
@@ -6,8 +13,9 @@ galaxy_info:
   license: Apache
   min_ansible_version: 2.8
   platforms:
-    - name: debian
+    - name: ubuntu
       versions:
-        - buster
+        - xenial
   galaxy_tags:
-    - swift-toolchain
+    - swift
+    - toolchain

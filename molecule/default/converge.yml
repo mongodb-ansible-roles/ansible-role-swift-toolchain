@@ -4,3 +4,5 @@
   hosts: all
   roles:
     - role: ansible-role-swift-toolchain
+      vars:
+        swift_toolchain_revision: "4.1-RELEASE"
